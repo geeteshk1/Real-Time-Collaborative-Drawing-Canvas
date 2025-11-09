@@ -24,7 +24,6 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '*').split(',');
-const HOST = process.env.HOST || 'localhost';
 
 // Initialize WebSocket server with ping timeout
 const wss = new WebSocket.Server({ 
@@ -48,6 +47,11 @@ server.on('upgrade', (request, socket, head) => {
 
 // Serve static files from client directory
 app.use(express.static(path.join(__dirname, '..', 'client')));
+
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 // Log all HTTP requests
 app.use((req, res, next) => {
@@ -329,6 +333,6 @@ setInterval(() => {
   });
 }, 30000);
 
-server.listen(PORT, HOST, () => {
-  console.log(`Server started on ${NODE_ENV === 'production' ? 'port ' + PORT : 'http://localhost:' + PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server started on port ${PORT}`);
 });
