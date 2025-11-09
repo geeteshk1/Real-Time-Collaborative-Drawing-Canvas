@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Collaborative Canvas</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="toolbar">
+      <div class="toolbar-section">
+        <div class="toolbar-group tools">
+          <label class="tool-select">
+            <span>Tool</span>
+            <select id="tool">
+              <option value="brush">✏️ Brush</option>
+              <option value="eraser">⌫ Eraser</option>
+            </select>
+          </label>
+          
+          <label class="color-picker">
+            <span>Color</span>
+            <input type="color" id="color" value="#000000" />
+          </label>
+          
+          <label class="size-slider">
+            <span>Size</span>
+            <input id="size" type="range" min="1" max="50" value="4" />
+            <output for="size">4px</output>
+          </label>
+        </div>
+
+        <div class="toolbar-group actions">
+          <button id="undo" class="action" title="Undo (Ctrl+Z)">↩️</button>
+          <button id="redo" class="action" title="Redo (Ctrl+Y)">↪️</button>
+          <button id="clear" class="action danger" title="Clear Canvas">🗑️</button>
+        </div>
+        
+        <div class="toolbar-group room">
+          <label class="room-select">
+            <span>Room</span>
+            <select id="room">
+              <option value="default">Main Room</option>
+              <option value="room1">Room 1</option>
+              <option value="room2">Room 2</option>
+            </select>
+          </label>
+          <div id="connection-status"></div>
+        </div>
+
+        <div class="toolbar-group metrics">
+          <div id="active-users" class="user-list"></div>
+          <div id="metrics">
+            <span class="metric">
+              <span class="metric-label">FPS:</span>
+              <span id="fps" class="metric-value">0</span>
+            </span>
+            <span class="metric">
+              <span class="metric-label">Latency:</span>
+              <span id="latency" class="metric-value">0</span>
+              <span class="metric-unit">ms</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="canvas-wrap">
+      <canvas id="canvas"></canvas>
+      <div id="cursors"></div>
+      <div id="notifications"></div>
+    </div>
+  </div>
+
+  <script src="websocket.js"></script>
+  <script src="canvas.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
