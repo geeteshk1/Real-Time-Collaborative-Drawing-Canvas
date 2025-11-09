@@ -24,6 +24,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '*').split(',');
+const HOST = process.env.HOST || 'localhost';
 
 // Initialize WebSocket server with ping timeout
 const wss = new WebSocket.Server({ 
@@ -328,6 +329,6 @@ setInterval(() => {
   });
 }, 30000);
 
-server.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`Server started on ${NODE_ENV === 'production' ? 'port ' + PORT : 'http://localhost:' + PORT}`);
 });
